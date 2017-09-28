@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require "./arrangements/random.rb"
 class Player
  attr_accessor :name, :team, :position, :pseudonym
 
