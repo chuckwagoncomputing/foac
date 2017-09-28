@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require "./arrangements/random.rb"
+
 class Player
  attr_accessor :name, :team, :position, :pseudonym
 
@@ -58,14 +59,6 @@ class Strategy
  end
 end
 
-if ARGV.include?("-h") or ARGV.include?("--help")
- puts "Usage: [-c <number of players>] [-1 <team 1 strategy>] [-2 <team 2 strategy>]"
- puts "e.g. main.rb -c 20 -1 random -2 threePseudonyms"
- puts "If options are not provided, the defaults are 16 players, all with the 'random' strategy"
- puts "The number of players will be rounded down to the nearest even number."
- exit 1
-end
-
 def arrange(arrangement)
  return eval("arrangement#{arrangement}()")
 end
@@ -83,6 +76,14 @@ def arrangementalternating()
   teams[player] = team
  end
  return teams
+end
+
+if ARGV.include?("-h") or ARGV.include?("--help")
+ puts "Usage: [-c <number of players>] [-1 <team 1 strategy>] [-2 <team 2 strategy>]"
+ puts "e.g. main.rb -c 20 -1 random -2 threePseudonyms"
+ puts "If options are not provided, the defaults are 16 players, all with the 'random' strategy"
+ puts "The number of players will be rounded down to the nearest even number."
+ exit 1
 end
 
 if cindex = ARGV.index('-c')
