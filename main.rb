@@ -91,8 +91,6 @@ if cindex = ARGV.index('-c')
 else
  $playerCount = 16 
 end
-# make an empty chair
-$emptyChair = $playerCount + 1
 
 if aindex = ARGV.index('-a')
  arrangement = ARGV[aindex + 1]
@@ -110,6 +108,9 @@ if sindex = ARGV.index('-2')
 else
  strategyTwo = "random"
 end
+
+# make an empty chair
+$emptyChair = $playerCount + 1
 
 $players = (1..$playerCount).to_a
 $pseudonyms = Hash[$players.zip($players.shuffle)]
