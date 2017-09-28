@@ -71,8 +71,6 @@ end
 
 def arrangementalternating()
  # make an array of players
- pseudonyms = Hash[$players.zip($players.shuffle)]
- positions = Hash[$players.zip($players)]
  teams = Hash.new
 
  $players.each do |player|
@@ -83,7 +81,7 @@ def arrangementalternating()
   end
   teams[player] = team
  end
- return pseudonyms, positions, teams
+ return teams
 end
 
 if cindex = ARGV.index('-c')
@@ -112,7 +110,9 @@ else
 end
 
 $players = (1..$playerCount).to_a
-$pseudonyms, $positions, $teams = arrange(arrangement)
+$pseudonyms = Hash[$players.zip($players.shuffle)]
+$positions = Hash[$players.zip($players)]
+$teams = arrange(arrangement)
 
 $players.each do |player|
  team = $teams[player]
