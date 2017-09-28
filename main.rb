@@ -65,20 +65,41 @@ if ARGV.include?("-h") or ARGV.include?("--help")
  exit 1
 end
 
+def arrange(arrangement)
+ return eval("arrangement#{arrangement}()")
+end
+
+def arrangementalternating()
+ # make an array of players
+ pseudonyms = Hash[$players.zip($players.shuffle)]
+ positions = Hash[$players.zip($players)]
+ teams = Hash.new
+
+ $players.each do |player|
+  if player.even?
+   team = 2
+  else
+   team = 1
+  end
+  teams[player] = team
+ end
+ return pseudonyms, positions, teams
+end
+
 if cindex = ARGV.index('-c')
  $playerCount = ARGV[cindex + 1]
 else
  $playerCount = 16 
 end
-# Make the player count even
-$playerCount = ($playerCount.to_i/2)*2
 # make an empty chair
 $emptyChair = $playerCount + 1
-# make an array of players
-$players = (1..$playerCount).to_a
-$pseudonyms = Hash[$players.zip($players.shuffle)]
-$positions = Hash[$players.zip($players)]
-$teams = Hash.new
+
+if aindex = ARGV.index('-a')
+ arrangement = ARGV[aindex + 1]
+else
+ arrangement = "alternating"
+end
+
 if sindex = ARGV.index('-1')
  strategyOne = ARGV[sindex + 1]
 else
@@ -90,15 +111,16 @@ else
  strategyTwo = "random"
 end
 
+$players = (1..$playerCount).to_a
+$pseudonyms, $positions, $teams = arrange(arrangement)
+
 $players.each do |player|
- if player.even?
-  team = 2
-  strategy = strategyTwo
- else
-  team = 1
+ team = $teams[player]
+ if team == 1
   strategy = strategyOne
+ elsif team == 2
+  strategy = strategyTwo
  end
- $teams[player] = team
  eval("$player#{player} = Player.new(player, team, $pseudonyms[player], strategy)")
 end
 
