@@ -174,7 +174,7 @@ if ARGV.include?("-v")
 end
 
 if cindex = ARGV.index('-c')
- $playerCount = ARGV[cindex + 1]
+ $playerCount = ARGV[cindex + 1].to_i
 else
  $playerCount = 16 
 end
