@@ -92,7 +92,6 @@ def runGame(verbose)
  $pseudonyms = Hash[$players.zip($players.shuffle)]
  $positions = Hash[$players.zip($players)]
  $teams = arrange($arrangement)
-puts $teams
  $players.each do |player|
   team = $teams[player]
   if team == 1
