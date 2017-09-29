@@ -156,7 +156,7 @@ def runGame(verbose)
 end
 
 if ARGV.include?("-h") or ARGV.include?("--help")
- puts "Usage: [-c <number of players>] [-1 <team 1 strategy>] [-2 <team 2 strategy>]"
+ puts "Usage: [-h|--help] [-c <player count>] [-a <arrangement>] [-1 <team 1 strategy>] [-2 <team 2 strategy>] [-b <number of times to run>] [-v]"
  puts "e.g. main.rb -c 20 -1 random -2 threePseudonyms"
  puts "If options are not provided, the defaults are 16 players, all with the 'random' strategy"
  puts "The number of players will be rounded down to the nearest even number."
