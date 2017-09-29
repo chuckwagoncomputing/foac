@@ -6,37 +6,23 @@ def arrangementrandom()
  teamTwoCount = 0
  $players.each do |player|
   team = rand(2) + 1
-  if player < 4
-   if team == 1
-    if teamOneCouchCount == 2
-     team = 2
-    else
-     teamOneCouchCount += 1
-     teamOneCount += 1
-    end
-   else
-    if teamTwoCouchCount == 2
-     team = 1
-    else
-     teamTwoCouchCount += 1
-     teamTwoCount += 1
-    end
+
+  if team == 1 and ( ( teamOneCouchCount == 2 and player <= 4 ) or teamOneCount == $playerCount / 2 )
+   team = 2
+  elsif team == 2 and ( ( teamTwoCouchCount == 2 and player <= 4 ) or teamTwoCount == $playerCount / 2 )
+   team = 1
+  end
+
+  if team == 1
+   if player <= 4
+    teamOneCouchCount += 1
    end
+   teamOneCount += 1
   else
-   if team == 1
-    if teamOneCount == $playerCount / 2
-     team = 2
-    else
-     teamOneCount += 1
-    end
+   if player <= 4
+    teamTwoCouchCount += 1
    end
-   if team == 2
-    if teamTwoCount == $playerCount / 2
-     team = 1
-    else
-     teamTwoCount += 1
-    end
-   end
+   teamTwoCount += 1
   end
   teams[player] = team
  end

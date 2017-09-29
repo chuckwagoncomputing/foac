@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+
+require "./strategies/qualitativeThreeCouchCaller.rb"
+require "./strategies/qualitativeThree.rb"
+require "./strategies/threePseudonymsMaybe.rb"
+require "./strategies/threePseudonyms.rb"
+
 require "./arrangements/random.rb"
 
 class Player
@@ -86,14 +92,14 @@ def runGame(verbose)
  $pseudonyms = Hash[$players.zip($players.shuffle)]
  $positions = Hash[$players.zip($players)]
  $teams = arrange($arrangement)
-
+puts $teams
  $players.each do |player|
- team = $teams[player]
- if team == 1
-  strategy = $strategyOne
- elsif team == 2
-  strategy = $strategyTwo
- end
+  team = $teams[player]
+  if team == 1
+   strategy = $strategyOne
+  elsif team == 2
+   strategy = $strategyTwo
+  end
   eval("$player#{player} = Player.new(player, team, $pseudonyms[player], strategy)")
  end
 
