@@ -78,38 +78,7 @@ def arrangementalternating()
  return teams
 end
 
-if ARGV.include?("-h") or ARGV.include?("--help")
- puts "Usage: [-c <number of players>] [-1 <team 1 strategy>] [-2 <team 2 strategy>]"
- puts "e.g. main.rb -c 20 -1 random -2 threePseudonyms"
- puts "If options are not provided, the defaults are 16 players, all with the 'random' strategy"
- puts "The number of players will be rounded down to the nearest even number."
- exit 1
-end
-
-if cindex = ARGV.index('-c')
- $playerCount = ARGV[cindex + 1]
-else
- $playerCount = 16 
-end
-
-if aindex = ARGV.index('-a')
- $arrangement = ARGV[aindex + 1]
-else
- $arrangement = "alternating"
-end
-
-if sindex = ARGV.index('-1')
- $strategyOne = ARGV[sindex + 1]
-else
- $strategyOne = "random"
-end
-if sindex = ARGV.index('-2')
- $strategyTwo = ARGV[sindex + 1]
-else
- $strategyTwo = "random"
-end
-
-def runGame()
+def runGame(verbose)
  # make an empty chair
  $emptyChair = $playerCount + 1
 
@@ -162,13 +131,12 @@ def runGame()
   calledPosition = $positions[calledName]
   # move them to the empty chair
   $positions[calledName] = $emptyChair
-  puts "Player #{callerName} called player #{calledName} from #{calledPosition} to #{$emptyChair} and is now #{calledPseudonym}"
+  puts "Player #{callerName} called player #{calledName} from #{calledPosition} to #{$emptyChair} and is now #{calledPseudonym}" if verbose
   # check if someone won
   if $teams[$positions.key(1)] == $teams[$positions.key(2)]
    if $teams[$positions.key(2)] == $teams[$positions.key(3)]
     if $teams[$positions.key(3)] == $teams[$positions.key(4)]
-     puts "Team #{$teams[$positions.key(1)]} has won!"
-     break
+     return $teams[$positions.key(1)]
     end
    end
   end
@@ -187,4 +155,61 @@ def runGame()
  end
 end
 
-runGame()
+if ARGV.include?("-h") or ARGV.include?("--help")
+ puts "Usage: [-c <number of players>] [-1 <team 1 strategy>] [-2 <team 2 strategy>]"
+ puts "e.g. main.rb -c 20 -1 random -2 threePseudonyms"
+ puts "If options are not provided, the defaults are 16 players, all with the 'random' strategy"
+ puts "The number of players will be rounded down to the nearest even number."
+ exit 1
+end
+
+if ARGV.include?("-v")
+ verbose = true
+end
+
+if cindex = ARGV.index('-c')
+ $playerCount = ARGV[cindex + 1]
+else
+ $playerCount = 16 
+end
+
+if aindex = ARGV.index('-a')
+ $arrangement = ARGV[aindex + 1]
+else
+ $arrangement = "alternating"
+end
+
+if sindex = ARGV.index('-1')
+ $strategyOne = ARGV[sindex + 1]
+else
+ $strategyOne = "random"
+end
+
+if sindex = ARGV.index('-2')
+ $strategyTwo = ARGV[sindex + 1]
+else
+ $strategyTwo = "random"
+end
+
+if bindex = ARGV.index('-b')
+ benchmarkRuns = ARGV[bindex + 1].to_i
+else
+ benchmarkRuns = 0
+end
+
+if benchmarkRuns > 0
+ teamOneCount = 0
+ teamTwoCount = 0
+ benchmarkRuns.times do
+  winningTeam = runGame(verbose)
+  if winningTeam == 1
+   teamOneCount += 1
+  else
+   teamTwoCount += 1
+  end
+ end
+ puts "Team 1 won #{teamOneCount} times, Team 2 won #{teamTwoCount} times"
+else
+ winningTeam = runGame(verbose)
+ puts "Team #{winningTeam} has won!"
+end
