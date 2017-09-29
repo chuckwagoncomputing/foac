@@ -6,6 +6,8 @@ require "./strategies/threePseudonymsMaybe.rb"
 require "./strategies/threePseudonyms.rb"
 
 require "./arrangements/random.rb"
+require "./arrangements/twoAfterCouch.rb"
+require "./arrangements/threeAfterCouch.rb"
 
 class Player
  attr_accessor :name, :team, :position, :pseudonym
