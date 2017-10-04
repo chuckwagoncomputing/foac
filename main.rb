@@ -6,7 +6,10 @@ require "./strategies/threePseudonymsMaybe.rb"
 require "./strategies/threePseudonyms.rb"
 
 require "./arrangements/random.rb"
+require "./arrangements/uneven.rb"
+require "./arrangements/nonAlternatingCouch.rb"
 require "./arrangements/twoAfterCouch.rb"
+require "./arrangements/twoAfterCouchTwo.rb"
 require "./arrangements/threeAfterCouch.rb"
 
 class Player
