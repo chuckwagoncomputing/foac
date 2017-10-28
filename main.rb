@@ -9,11 +9,6 @@ require "./strategies/enemyFromCouch.rb"
 require "./strategies/friendToCouch.rb"
 
 require "./arrangements/random.rb"
-require "./arrangements/uneven.rb"
-require "./arrangements/nonAlternatingCouch.rb"
-require "./arrangements/twoAfterCouch.rb"
-require "./arrangements/twoAfterCouchTwo.rb"
-require "./arrangements/threeAfterCouch.rb"
 
 class Player
  attr_accessor :name, :team, :position, :pseudonym
